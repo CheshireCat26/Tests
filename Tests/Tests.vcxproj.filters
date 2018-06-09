@@ -20,7 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Псевдо код.txt" />
     <Text Include="questions.txt" />
   </ItemGroup>
 </Project>
