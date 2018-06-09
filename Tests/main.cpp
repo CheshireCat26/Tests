@@ -21,18 +21,20 @@ void out_quest(question const que);
 vector<int> get_user_ans();
 bool check_answer(const question& que, const vector<int>& user_ans);
 bool consist(int i, vector<int>);
-void out_intformation(int, int);
+void out_intformation(int);
 
+const int count_quest = 20;
 
 int main()
 {
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
+	srand(time(NULL));
 	try
 	{
 		vector<question> questions = get_questions();
 		int count_right = interview(questions);
-		out_intformation(count_right, questions.size());
+		out_intformation(count_right);
 		keep_window_open();
 	}
 	catch (const std::exception& e)
@@ -109,12 +111,19 @@ void read_answers(question& que, ifstream& const ifile)
 int interview(vector<question> const quests)
 {
 	int sum_rigth{0};
-	for (int i = 0; i != quests.size(); i++)
+
+	vector<int> prevs;
+	for (int i = 0; i != count_quest; i++)
 	{
-		out_quest(quests[i]);
+		int numb = rand() % quests.size();
+		while (consist(numb, prevs))
+			numb = rand() % quests.size();
+		prevs.push_back(numb);
+
+		out_quest(quests[numb]);
 		cout << "> ";
 		vector<int> user_ans = get_user_ans();
-		if (check_answer(quests[i], user_ans))
+		if (check_answer(quests[numb], user_ans))
 			sum_rigth++;
 	}
 
@@ -174,8 +183,8 @@ bool consist(int val, vector<int> mass)
 	return false;
 }
 
-void out_intformation(int rigth, int count_que)
+void out_intformation(int rigth)
 {
-	cout << "Правильных ответов: " << rigth << " из " << count_que <<'\n';
-	cout << "Процент успешности: " << double(rigth) / count_que * 100 << "%\n";
+	cout << "Правильных ответов: " << rigth << " из " << count_quest <<'\n';
+	cout << "Процент успешности: " << double(rigth) / count_quest * 100 << "%\n";
 }
