@@ -14,8 +14,8 @@ struct question
 };
 
 vector<question> get_questions();
-void read_quests(vector<question>&, ifstream& const);
-void read_answers(question& que, ifstream& const ifile);
+void read_quests(vector<question>&, istream& const);
+void read_answers(question& que, istream& const ifile);
 int interview(vector<question>);
 void out_quest(question const que);
 vector<int> get_user_ans();
@@ -47,7 +47,7 @@ int main()
 	
 }
 
-
+//Возвращает вопросы из файла questions.txt
 vector<question> get_questions()
 {
 	vector<question> questions;
@@ -59,8 +59,8 @@ vector<question> get_questions()
 	return questions;
 }
 
-
-void read_quests(vector<question>& questions, ifstream& const ifile)
+//Чтение вопросов из потока 
+void read_quests(vector<question>& questions, istream& const ifile)
 {
 	while (!ifile.eof())
 	{
@@ -75,8 +75,8 @@ void read_quests(vector<question>& questions, ifstream& const ifile)
 	}
 }
 
-
-void read_answers(question& que, ifstream& const ifile)
+//Чтение ответов на вопрос из потока
+void read_answers(question& que, istream& const ifile)
 {
 	char mark{ ' ' };
 	while (mark != '?' && !ifile.eof())
@@ -108,6 +108,7 @@ void read_answers(question& que, ifstream& const ifile)
 	}
 }
 
+//Опрос пользователся
 int interview(vector<question> const quests)
 {
 	int sum_rigth{0};
@@ -130,6 +131,7 @@ int interview(vector<question> const quests)
 	return sum_rigth;
 }
 
+//Выввод вопопроса и ответов на него
 void out_quest(question const que)
 {
 	cout << que.quest << '\n';
@@ -141,6 +143,7 @@ void out_quest(question const que)
 	}
 }
 
+//Получение ответов от пользователся
 vector<int> get_user_ans()
 {
 	vector<int> user_ans;
@@ -161,6 +164,7 @@ vector<int> get_user_ans()
 	return user_ans;
 }
 
+//Проверка ответов пользователся
 bool check_answer(const question& que, const vector<int>& user_ans)
 {
 
@@ -183,6 +187,7 @@ bool consist(int val, vector<int> mass)
 	return false;
 }
 
+//Вывод результатов тестирования
 void out_intformation(int rigth)
 {
 	cout << "Правильных ответов: " << rigth << " из " << count_quest <<'\n';
