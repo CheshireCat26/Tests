@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <std_lib_facilities.h>
+#include "std_lib_facilities.h"
 
 struct answer
 {
@@ -23,7 +23,7 @@ bool check_answer(const question& que, const vector<int>& user_ans);
 bool consist(int i, vector<int>);
 void out_intformation(int, vector<int>& wrong, vector<question>& questions);
 
-//Колличетво вопросов
+//ГЉГ®Г«Г«ГЁГ·ГҐГІГўГ® ГўГ®ГЇГ°Г®Г±Г®Гў
 const int count_quest = 20;
 
 int main()
@@ -49,19 +49,19 @@ int main()
 	
 }
 
-//Возвращает вопросы из файла questions.txt
+//Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГўГ®ГЇГ°Г®Г±Г» ГЁГ§ ГґГ Г©Г«Г  questions.txt
 vector<question> get_questions()
 {
 	vector<question> questions;
 	ifstream ifile{ "questions.txt" };
 	read_quests(questions, ifile);
 	if (questions.size() == 0)
-		error("Не найдено вопросов");
+		error("ГЌГҐ Г­Г Г©Г¤ГҐГ­Г® ГўГ®ГЇГ°Г®Г±Г®Гў");
 	ifile.close();
 	return questions;
 }
 
-//Чтение вопросов из потока 
+//Г—ГІГҐГ­ГЁГҐ ГўГ®ГЇГ°Г®Г±Г®Гў ГЁГ§ ГЇГ®ГІГ®ГЄГ  
 void read_quests(vector<question>& questions, istream& const ifile)
 {
 	while (!ifile.eof())
@@ -77,7 +77,7 @@ void read_quests(vector<question>& questions, istream& const ifile)
 	}
 }
 
-//Чтение ответов на вопрос из потока
+//Г—ГІГҐГ­ГЁГҐ Г®ГІГўГҐГІГ®Гў Г­Г  ГўГ®ГЇГ°Г®Г± ГЁГ§ ГЇГ®ГІГ®ГЄГ 
 void read_answers(question& que, istream& const ifile)
 {
 	char mark{ ' ' };
@@ -96,7 +96,7 @@ void read_answers(question& que, istream& const ifile)
 			break;
 
 		if (mark != '+' && mark != '-')
-			error("Неверный символ ответа");
+			error("ГЌГҐГўГҐГ°Г­Г»Г© Г±ГЁГ¬ГўГ®Г« Г®ГІГўГҐГІГ ");
 
 		answer ans;
 		getline(ifile, ans.ans);
@@ -110,7 +110,7 @@ void read_answers(question& que, istream& const ifile)
 	}
 }
 
-//Опрос пользователся
+//ГЋГЇГ°Г®Г± ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Г±Гї
 int interview(vector<question> const quests, vector<int>& ind_worng)
 {
 	int sum_rigth{0};
@@ -135,7 +135,7 @@ int interview(vector<question> const quests, vector<int>& ind_worng)
 	return sum_rigth;
 }
 
-//Выввод вопопроса и ответов на него
+//Г‚Г»ГўГўГ®Г¤ ГўГ®ГЇГ®ГЇГ°Г®Г±Г  ГЁ Г®ГІГўГҐГІГ®Гў Г­Г  Г­ГҐГЈГ®
 void out_quest(question const que)
 {
 	cout << que.quest << '\n';
@@ -147,7 +147,7 @@ void out_quest(question const que)
 	}
 }
 
-//Получение ответов от пользователся
+//ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ Г®ГІГўГҐГІГ®Гў Г®ГІ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Г±Гї
 vector<int> get_user_ans()
 {
 	vector<int> user_ans;
@@ -168,7 +168,7 @@ vector<int> get_user_ans()
 	return user_ans;
 }
 
-//Проверка ответов пользователся
+//ГЏГ°Г®ГўГҐГ°ГЄГ  Г®ГІГўГҐГІГ®Гў ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Г±Гї
 bool check_answer(const question& que, const vector<int>& user_ans)
 {
 
@@ -191,12 +191,12 @@ bool consist(int val, vector<int> mass)
 	return false;
 }
 
-//Вывод результатов тестирования
+//Г‚Г»ГўГ®Г¤ Г°ГҐГ§ГіГ«ГјГІГ ГІГ®Гў ГІГҐГ±ГІГЁГ°Г®ГўГ Г­ГЁГї
 void out_intformation(int rigth, vector<int>& wrong, vector<question>& questions)
 {
-	cout << "Правильных ответов: " << rigth << " из " << count_quest <<'\n';
-	cout << "Процент успешности: " << double(rigth) / count_quest * 100 << "%\n";
-	cout << "Вопросы с правиильными ответами, на которые вы ответили неверно:\n";
+	cout << "ГЏГ°Г ГўГЁГ«ГјГ­Г»Гµ Г®ГІГўГҐГІГ®Гў: " << rigth << " ГЁГ§ " << count_quest <<'\n';
+	cout << "ГЏГ°Г®Г¶ГҐГ­ГІ ГіГ±ГЇГҐГёГ­Г®Г±ГІГЁ: " << double(rigth) / count_quest * 100 << "%\n";
+	cout << "Г‚Г®ГЇГ°Г®Г±Г» Г± ГЇГ°Г ГўГЁГЁГ«ГјГ­Г»Г¬ГЁ Г®ГІГўГҐГІГ Г¬ГЁ, Г­Г  ГЄГ®ГІГ®Г°Г»ГҐ ГўГ» Г®ГІГўГҐГІГЁГ«ГЁ Г­ГҐГўГҐГ°Г­Г®:\n";
 	for (int i : wrong)
 	{
 		cout << questions[i].quest << '\n';
