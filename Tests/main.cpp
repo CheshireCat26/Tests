@@ -16,13 +16,14 @@ struct question
 vector<question> get_questions();
 void read_quests(vector<question>&, istream& const);
 void read_answers(question& que, istream& const ifile);
-int interview(vector<question>);
+int interview(vector<question>, vector<int>& ind_worng);
 void out_quest(question const que);
 vector<int> get_user_ans();
 bool check_answer(const question& que, const vector<int>& user_ans);
 bool consist(int i, vector<int>);
-void out_intformation(int);
+void out_intformation(int, vector<int>& wrong, vector<question>& questions);
 
+//Колличетво вопросов
 const int count_quest = 20;
 
 int main()
@@ -33,8 +34,9 @@ int main()
 	try
 	{
 		vector<question> questions = get_questions();
-		int count_right = interview(questions);
-		out_intformation(count_right);
+		vector<int> wrong;
+		int count_right = interview(questions, wrong);
+		out_intformation(count_right, wrong, questions);
 		keep_window_open();
 	}
 	catch (const std::exception& e)
@@ -109,7 +111,7 @@ void read_answers(question& que, istream& const ifile)
 }
 
 //Опрос пользователся
-int interview(vector<question> const quests)
+int interview(vector<question> const quests, vector<int>& ind_worng)
 {
 	int sum_rigth{0};
 
@@ -126,6 +128,8 @@ int interview(vector<question> const quests)
 		vector<int> user_ans = get_user_ans();
 		if (check_answer(quests[numb], user_ans))
 			sum_rigth++;
+		else
+			ind_worng.push_back(numb);
 	}
 
 	return sum_rigth;
@@ -188,8 +192,16 @@ bool consist(int val, vector<int> mass)
 }
 
 //Вывод результатов тестирования
-void out_intformation(int rigth)
+void out_intformation(int rigth, vector<int>& wrong, vector<question>& questions)
 {
 	cout << "Правильных ответов: " << rigth << " из " << count_quest <<'\n';
 	cout << "Процент успешности: " << double(rigth) / count_quest * 100 << "%\n";
+	cout << "Вопросы с правиильными ответами, на которые вы ответили неверно:\n";
+	for (int i : wrong)
+	{
+		cout << questions[i].quest << '\n';
+		for (int j = 0; j != questions[i].answers.size(); j++)
+			if (questions[i].answers[j].right)
+				cout << '\t' <<questions[i].answers[j].ans << '\n';
+	}
 }
