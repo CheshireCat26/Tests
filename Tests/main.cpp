@@ -24,7 +24,7 @@ bool consist(int i, vector<int>);
 void out_intformation(int, vector<int>& wrong, vector<question>& questions);
 
 //Колличетво вопросов
-const int count_quest = 20;
+int count_quest = 20;
 
 int main()
 {
@@ -35,6 +35,13 @@ int main()
 	{
 		vector<question> questions = get_questions();
 		vector<int> wrong;
+		cout << "Всего доступно вопросов: " << questions.size() << '\n';
+		cout << "ВВедите желаемое колличество вопросов в тесте: ";
+		cin >> count_quest;
+
+		if (count_quest > questions.size())
+			error("ОШИБКА: слишком много вопросов");
+
 		int count_right = interview(questions, wrong);
 		out_intformation(count_right, wrong, questions);
 		keep_window_open();
